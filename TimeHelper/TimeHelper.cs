@@ -1,11 +1,19 @@
 ﻿#region using
-using System; 
+using System;
+#endregion
+
+#region Note aux développeurs
+/* ----------------------------------------------------------------------------------------------------------
+ * http://blog.dezfowler.com/2010/07/utc-gotchas-in-net-and-sql-server.html
+ * ----------------------------------------------------------------------------------------------------------*/
 #endregion
 
 namespace TimeHelper
 {
     /// <summary>
+    /// Helper time methods
     /// Conversion between local date to UTC date
+    /// Conversion to Unix format
     ///</summary>
     public static class TimeHelper
     {
@@ -119,6 +127,20 @@ namespace TimeHelper
             var offset = currentTimeZone.GetUtcOffset(date);
 
             return offset.Hours;
+        }
+        #endregion
+
+        #region DateTimeToUnixTimestamp
+        /// <summary>
+        /// Convert a date to an Unix timestamp
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static long DateTimeToUnixTimestamp(DateTime dateTime)
+        {
+            long unixTimestamp = dateTime.Ticks - new DateTime(1970, 1, 1).Ticks;
+            unixTimestamp /= TimeSpan.TicksPerSecond;
+            return unixTimestamp;
         }
         #endregion
 
